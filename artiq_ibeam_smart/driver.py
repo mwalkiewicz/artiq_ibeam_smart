@@ -145,7 +145,7 @@ class ArtiqIbeamSmart(ArtiqIbeamSmartInterface):
         ret = self.send_command("sh level pow")
         power = self.extract_channel_power(channel, ret)
         return power
-    
+
     def ping(self):
         """
         Sends a "serial" command to the device and checks if the response 
@@ -180,14 +180,24 @@ class ArtiqIbeamSmartSim(ArtiqIbeamSmartInterface):
         if channel_on:
             logging.warning(f"Simulated: Turning channel {channel} ON")
         else:
-            logging.warning(f"Simulated: Turning channel {channel } OFF")
+            logging.warning(f"Simulated: Turning channel {channel} OFF")
+
+    async def set_laser_on(self, laser_on):
+        """
+        Simulate change state of the laser diode.
+        """
+        if laser_on:
+            logging.warning("Simulated: Turning laser ON")
+        else:
+            logging.warning("Simulated: Turning laser OFF")
 
     async def set_channel_power(self, channel, power):
         """
         Simulate changing power of the channel.
         """
         self.channel_power[self.convert_channel(channel)] = power
-        logging.warning(f"Simulated: Setting channel {channel} power to {power}[uW]")
+        logging.warning(
+            f"Simulated: Setting channel {channel} power to {power}[uW]")
 
     async def get_channel_on(self, channel):
         """
